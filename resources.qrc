@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>lgl-powerprofile-manager.png</file>
+    </qresource>
+</RCC>
