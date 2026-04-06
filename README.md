@@ -1,79 +1,154 @@
-# LGL Power Profile Manager
+# LGL Debian Installer v0.0.7
 
-A Qt6 GUI for managing tuned power profiles on Fedora and RHEL-based systems.
-
-## Overview
-
-LGL Power Profile Manager provides a simple, desktop-friendly interface for switching between tuned profiles. It runs as a normal user and uses `pkexec` to apply profiles with elevated privileges.
+This exists because I was curious whether you can get something close to the same experience as Arch, but on Debian.
 
 It is 100% vibecoded, but intelligently prompted by me.
 
-## Features
+This is a proof of concept. One thing I like about Arch is the build-from-nothing aspect, and this project is an attempt to get a similar feel with a Debian base install.
 
-- View the currently active tuned profile
-- Browse all available profiles with human-friendly labels and descriptions
-- Apply profiles with a single click via pkexec
-- System tray icon showing current profile status
-- Reference tab with a full profile guide
-- Auto-refreshes active profile status every 5 seconds
-- Setup tab shown when tuned is not installed
+## Current Scope
 
-## Dependencies
+This is NO LONGER just built for VMs only, so you CAN accidentally screw up your actual install if you are not careful!
 
-- Qt6 (Core, Widgets)
-- tuned + tuned-adm
-- pkexec (polkit)
-- cmake 3.16+
-- GCC or Clang with C++20 support
+The current goal is simple:
 
-### Install dependencies (Fedora)
+- start from a Debian live environment (Recommended)in a VM
+- run the installer from TTY
+- get through the base install, then configure locale, timezone, keyboard, and desktop environment interactively using the native Debian tools
+- reboot into your chosen desktop environment
+
+## Prerequisites
+
+Inside the Debian live environment:
 
 ```bash
-sudo dnf install qt6-qtbase-devel cmake gcc-c++ tuned
-sudo systemctl enable --now tuned
+sudo apt install git
 ```
 
-## Build
+Then:
 
 ```bash
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build
+git clone https://github.com/linuxgamerlife/debianinstaller
+cd debianinstaller
+chmod +x debianinstall.py
+sudo ./debianinstall.py --interactive
 ```
 
-Binary will be at `build/lgl-powerprofile-manager`.
+## Banner
 
-## Note on power-profiles-daemon
+Every run starts with:
 
-When a tuned profile is applied it will override power-profiles-daemon settings. If you notice your profile being reverted, you may need to disable power-profiles-daemon.
+```
+-----------------------------------------------------
+|            LGL Debian Installer v0.0.7            |
+|                  100% Vibe Coded                  |
+|               Intelligently Prompted              |
+| https://github.com/linuxgamerlife/debianinstaller |
+-----------------------------------------------------
+```
+
+## Usage
+
+Run with `--interactive` to launch the step-by-step wizard:
+
+```
+Step 1: Select disk
+  (lsblk shown here)
+  Disk [/dev/vda]:
+  Use /dev/vda? This will erase all data on it. [y/N]:
+
+Step 2: What would you like your hostname to be?
+Step 3: What username would you like to use?
+Step 4: Which package profile do you want?
+Step 5: State file (saves progress for resume if interrupted)
+```
+
+After completing the steps, the screen clears and shows a summary:
+
+```
+1. disk:            /dev/vda
+2. hostname:        debian-vm
+3. username:        debian
+4. package profile: standard-tty
+5. state file:      /var/tmp/debianinstall-state.json
+
+Select number to change, or y to continue:
+```
+
+Select a number to change that item, or `y` to proceed. After confirming, you will be prompted to create passwords, then shown a final drive wipe warning before anything destructive runs.
+
+Locale, timezone, keyboard layout, and desktop environment are configured interactively mid-install using the standard Debian ncurses tools — you will be prompted for these automatically.
+
+### Non-VM installs
+
+If no VM is detected, the installer shows a warning and runs `lsblk` so you can see your drives before deciding. You will be asked to confirm twice. Use with care.
+
+### Resume
+
+If an install is interrupted, resume from where it left off:
 
 ```bash
-# Disable
-sudo systemctl mask power-profiles-daemon
-
-# Re-enable
-sudo systemctl unmask power-profiles-daemon
+sudo ./debianinstall.py --resume --mode apply
 ```
 
-## Profile Order
+## What Gets Installed
 
-Profiles are ordered by most common desktop/gaming use case:
+The installer writes DEB822 apt sources covering:
 
-1. balanced — Safe Default
-2. desktop — Daily Driver
-3. latency-performance — Light Gaming
-4. accelerator-performance — Gaming Performance
-5. throughput-performance — Heavy Tasks
-6. network-latency — Low Latency Network
-7. virtual-guest — VM Guest
-8. virtual-host — VM Host
-9. balanced-battery — Battery Saving
-10. powersave — Max Battery
-11. hpc-compute — HPC / Scientific
-12. network-throughput — High Throughput Network
-13. optimize-serial-console — Headless / Serial
-14. intel-sst — Intel SST
-15. aws — AWS EC2
+- `trixie`, `trixie-updates`, `trixie-backports`
+- `trixie-security`
+- `main contrib non-free non-free-firmware`
 
-## License
+i386 architecture is enabled by default (required for Steam and 32-bit software).
 
-See LICENSE file.
+### Package Profiles
+
+**minimal-tty** — bare minimum: sudo, locales, keyboard-configuration, console-setup, tasksel
+
+**standard-tty** — adds: ca-certificates, curl, wget, less, vim-tiny, network-manager, openssh-server, tasksel
+
+`linux-image-amd64` and `systemd-sysv` are installed on top of whichever profile you pick.
+
+`firmware-linux` and `firmware-linux-nonfree` are installed before the kernel on every install, so hardware firmware is baked into the initramfs. This prevents boot issues with USB controllers and other devices that require firmware to initialise.
+
+## Interactive Configuration Mid-Install
+
+After packages land, the installer drops you into the standard Debian ncurses configuration screens in order:
+
+1. **tzdata** — select your timezone
+2. **keyboard-configuration** — select your keyboard layout
+3. **tasksel** — select a desktop environment (or skip for TTY only)
+
+These run inside the chroot so your choices apply to the installed system directly.
+
+After tasksel, the installer automatically detects which display manager was installed (`sddm` for KDE/LXQt, `gdm3` for GNOME, `lightdm` for XFCE/MATE/Cinnamon) and enables it along with `graphical.target`. If you skipped the DE in tasksel the system stays on `multi-user.target`.
+
+## If You End Up at a TTY After Reboot
+
+It is easy to miss selecting a desktop environment in tasksel — you need to press **Space** to select it, not Enter. If you reboot into a TTY, run:
+
+```bash
+sudo tasksel
+```
+
+Use the arrow keys to highlight your DE and press **Space** to select it (you should see an asterisk `*` appear), then press **Enter** to install.
+
+## After Install
+
+Once all phases are complete you will be asked:
+
+- **Install latest kernel from backports?** — installs `linux-image-amd64` from `trixie-backports` and runs `apt upgrade`
+- **Reboot now?** — reboots out of the live environment
+
+You will come back into whichever desktop environment you selected in tasksel, or a TTY login if you skipped it.
+
+## Notes
+
+Right now this is intentionally narrow:
+
+- VM use only (QEMU/KVM)
+- UEFI + GPT + ext4 only
+- proof of concept
+- focused on the install-from-scratch feel
+
+If you use it, treat it like an experiment and use disposable VMs.
