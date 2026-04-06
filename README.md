@@ -6,6 +6,8 @@ A Qt6 GUI for managing tuned power profiles on Fedora and RHEL-based systems.
 
 LGL Power Profile Manager provides a simple, desktop-friendly interface for switching between tuned profiles. It runs as a normal user and uses `pkexec` to apply profiles with elevated privileges.
 
+It is 100% vibecoded, but intelligently prompted by me.
+
 ## Features
 
 - View the currently active tuned profile
