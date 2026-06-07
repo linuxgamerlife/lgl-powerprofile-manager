@@ -26,6 +26,13 @@
   </categories>
   <url type="homepage">https://github.com/linuxgamerlife/lgl-powerprofile-manager</url>
   <releases>
+    <release version="1.1.2" date="2026-06-07">
+      <description>
+        <ul>
+          <li>Prevent multiple instances of the application from launching simultaneously.</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.1.1" date="2026-06-07">
       <description>
         <ul>

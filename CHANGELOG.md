@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2] - 2026-06-07
+
+### Fixed
+- Prevent multiple instances of the application from launching simultaneously
+
+---
+
 ## [1.1.1] - 2026-06-07
 
 ### Build
