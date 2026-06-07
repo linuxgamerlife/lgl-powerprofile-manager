@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=LGL Power Profile Manager
+GenericName=Power Profile Manager
+Comment=Manage tuned power profiles
+Exec=lgl-powerprofile-manager
+Icon=lgl-powerprofile-manager
+Categories=System;Settings;
+Keywords=tuned;performance;profile;power;cpu;

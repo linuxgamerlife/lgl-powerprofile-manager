@@ -54,14 +54,13 @@ private:
     void applySetupMode();
     void applyNormalMode();
 
-    // Reads available profiles and current active profile (no root needed)
     static QStringList readAvailableProfiles();
-    static QString readCurrentProfile();
 
     // State
     QString     m_currentProfile;
     QString     m_pendingOperation;
     QTimer     *m_autoRefreshTimer;
+    bool        m_trayNotifShown = false;
 
     // UI
     QWidget    *m_centralWidget;
@@ -99,6 +98,7 @@ private:
     QWidget *m_setupTab = nullptr;
 
 protected:
+    void closeEvent(QCloseEvent *event) override;
     void resizeEvent(QResizeEvent *event) override {
         QMainWindow::resizeEvent(event);
         if (m_refTableWidget) m_refTableWidget->resizeRowsToContents();

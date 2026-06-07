@@ -11,22 +11,9 @@
 #include <QDateTime>
 #include <QFont>
 #include <QIcon>
-#include <QPixmap>
-#include <QPainter>
 #include <QRegularExpression>
 #include <QStandardPaths>
-
-// ─── Helpers ────────────────────────────────────────────────────────────────
-
-static QIcon makeColorIcon(const QColor& color) {
-    QPixmap pm(16, 16);
-    pm.fill(Qt::transparent);
-    QPainter p(&pm);
-    p.setBrush(color);
-    p.setPen(Qt::NoPen);
-    p.drawRect(2, 2, 11, 11);
-    return QIcon(pm);
-}
+#include <QCloseEvent>
 
 // SmoothScrollArea — wheel events captured regardless of which child has focus
 class SmoothScrollArea : public QScrollArea {
@@ -433,7 +420,8 @@ void MainWindow::setupMenuBar() {
 }
 
 void MainWindow::setupTray() {
-    m_trayIcon = new QSystemTrayIcon(makeColorIcon(Qt::gray), this);
+    QIcon appIcon(":/lgl-powerprofile-manager.png");
+    m_trayIcon = new QSystemTrayIcon(appIcon, this);
     m_trayMenu = new QMenu(this);
 
     m_trayStatusAction = m_trayMenu->addAction("Profile: Unknown");
@@ -571,14 +559,12 @@ void MainWindow::updateStatusDisplay(const QString& activeProfile, bool syncSele
         m_statusLabel->setText("Unknown");
         m_activeProfileLabel->setText("—");
         m_serviceStatusLabel->setText("—");
-        m_trayIcon->setIcon(makeColorIcon(Qt::gray));
         m_trayStatusAction->setText("Profile: Unknown");
     } else {
         m_statusDot->setStyleSheet("color: #3db03d;");
         m_statusLabel->setText("Active");
         m_activeProfileLabel->setText(activeProfile);
         m_serviceStatusLabel->setText("Running");
-        m_trayIcon->setIcon(makeColorIcon(QColor("#3db03d")));
         m_trayStatusAction->setText("Profile: " + activeProfile);
         m_trayIcon->setToolTip("LGL Power Profile Manager — " + activeProfile);
 
@@ -623,7 +609,7 @@ void MainWindow::onTrayActivated(QSystemTrayIcon::ActivationReason reason) {
 
 void MainWindow::showAbout() {
     QMessageBox::about(this, "About LGL Power Profile Manager",
-        "<b>LGL Power Profile Manager</b> v1.0.0<br><br>"
+        "<b>LGL Power Profile Manager</b> v1.1.0<br><br>"
         "A Qt6 GUI for managing tuned performance profiles.<br><br>"
         "Built for Fedora and RHEL-based systems.<br>"
         "© LinuxGamerLife");
@@ -666,13 +652,17 @@ QStringList MainWindow::readAvailableProfiles() {
     return ordered;
 }
 
-QString MainWindow::readCurrentProfile() {
-    QProcess p;
-    p.start("tuned-adm", {"active"});
-    if (!p.waitForFinished(3000)) { p.kill(); return {}; }
-
-    const QString out = QString::fromUtf8(p.readAllStandardOutput()).trimmed();
-    static const QRegularExpression re(R"(Current active profile:\s*(\S+))");
-    const auto m = re.match(out);
-    return m.hasMatch() ? m.captured(1) : QString{};
+void MainWindow::closeEvent(QCloseEvent* event) {
+    event->ignore();
+    hide();
+    if (!m_trayNotifShown) {
+        m_trayNotifShown = true;
+        m_trayIcon->showMessage(
+            "LGL Power Profile Manager",
+            "Running in the background. Right-click the tray icon to quit.",
+            QSystemTrayIcon::Information,
+            3000
+        );
+    }
 }
+

@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.1.0] - 2026-06-07
+
+### Fixed
+- Window close button now minimizes to system tray instead of quitting the application
+- One-time tray notification shown on first minimize informing the user how to quit
+
+### Changed
+- System tray icon now displays the application icon instead of a colored status square
+- Updated application icon to new design
+- Removed unused `makeColorIcon` helper and its QPainter/QPixmap dependencies
+
+### Build
+- Added CMake install rules for binary, desktop file, metainfo, and hicolor icons (48, 64, 128, 256)
+- Moved spec, desktop file, metainfo, and icons into packaging/ subdirectory
+- Added AppStream metainfo file
+- Added RPM spec file for COPR SCM builds
+- Bumped version to 1.1.0
+
+---
+
 ## [1.0.0] - 2026-04-05
 
 ### Initial Release

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.linuxgamerlife.lgl-powerprofile-manager</id>
+  <name>LGL Power Profile Manager</name>
+  <summary>Qt6 GUI for managing tuned power profiles</summary>
+  <launchable type="desktop-id">lgl-powerprofile-manager.desktop</launchable>
+  <description>
+    <p>LGL Power Profile Manager is a desktop application for switching between
+       tuned performance profiles on Fedora and RHEL-based systems. It runs as
+       a normal user and uses pkexec to apply profiles with elevated privileges.</p>
+    <p>Features include a system tray icon that keeps the app running in the
+       background, auto-refresh of the active profile every 5 seconds, a
+       scrollable profile list with human-friendly labels and descriptions, a
+       command output log, and a reference tab covering all built-in tuned
+       profiles.</p>
+  </description>
+  <metadata_license>MIT</metadata_license>
+  <project_license>MIT</project_license>
+  <developer id="io.github.linuxgamerlife">
+    <name>linuxgamerlife</name>
+  </developer>
+  <url type="homepage">https://github.com/linuxgamerlife/lgl-powerprofile-manager</url>
+  <releases>
+    <release version="1.1.0" date="2026-06-07">
+      <description>
+        <ul>
+          <li>Window close button now minimizes to system tray instead of quitting.</li>
+          <li>System tray icon now shows the application icon.</li>
+          <li>Updated application icon.</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.0.0" date="2026-04-05">
+      <description>
+        <ul>
+          <li>Initial release.</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+  <content_rating type="oars-1.1"/>
+</component>

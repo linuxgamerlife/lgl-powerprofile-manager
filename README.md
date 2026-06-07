@@ -4,34 +4,38 @@ A Qt6 GUI for managing tuned power profiles on Fedora and RHEL-based systems.
 
 ## Overview
 
-LGL Power Profile Manager provides a simple, desktop-friendly interface for switching between tuned profiles. It runs as a normal user and uses `pkexec` to apply profiles with elevated privileges.
+LGL Power Profile Manager provides a simple, desktop-friendly interface for switching between tuned profiles. It runs as a normal user and uses `pkexec` to apply profiles with elevated privileges. The application minimizes to the system tray when closed so it stays available without occupying taskbar space.
 
 ## Features
 
 - View the currently active tuned profile
 - Browse all available profiles with human-friendly labels and descriptions
 - Apply profiles with a single click via pkexec
-- System tray icon showing current profile status
+- System tray icon — click to show/hide, right-click for quick actions and quit
+- Minimizes to tray on window close (one-time notification on first minimize)
 - Reference tab with a full profile guide
 - Auto-refreshes active profile status every 5 seconds
 - Setup tab shown when tuned is not installed
 
-## Dependencies
+## Installation
 
-- Qt6 (Core, Widgets)
-- tuned + tuned-adm
-- pkexec (polkit)
-- cmake 3.16+
-- GCC or Clang with C++20 support
+### From COPR (recommended)
 
-### Install dependencies (Fedora)
+```bash
+sudo dnf copr enable linuxgamerlife/lgl-powerprofile-manager
+sudo dnf install lgl-powerprofile-manager
+```
+
+### From source
+
+#### Dependencies (Fedora)
 
 ```bash
 sudo dnf install qt6-qtbase-devel cmake gcc-c++ tuned
 sudo systemctl enable --now tuned
 ```
 
-## Build
+#### Build
 
 ```bash
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
@@ -39,6 +43,12 @@ cmake --build build
 ```
 
 Binary will be at `build/lgl-powerprofile-manager`.
+
+#### Install
+
+```bash
+sudo cmake --install build
+```
 
 ## Note on power-profiles-daemon
 
@@ -74,4 +84,4 @@ Profiles are ordered by most common desktop/gaming use case:
 
 ## License
 
-See LICENSE file.
+MIT — see LICENSE file.
