@@ -5,7 +5,7 @@
 int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
     app.setApplicationName("LGL Power Profile Manager");
-    app.setApplicationVersion("1.1.0");
+    app.setApplicationVersion("1.1.1");
     app.setOrganizationName("LinuxGamerLife");
 
     app.setWindowIcon(QIcon(":/lgl-powerprofile-manager.png"));

@@ -5,5 +5,5 @@ GenericName=Power Profile Manager
 Comment=Manage tuned power profiles
 Exec=lgl-powerprofile-manager
 Icon=lgl-powerprofile-manager
-Categories=System;Settings;
+Categories=Settings;HardwareSettings;
 Keywords=tuned;performance;profile;power;cpu;

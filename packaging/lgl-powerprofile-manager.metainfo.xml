@@ -21,7 +21,7 @@
   </developer>
   <url type="homepage">https://github.com/linuxgamerlife/lgl-powerprofile-manager</url>
   <releases>
-    <release version="1.1.0" date="2026-06-07">
+    <release version="1.1.1" date="2026-06-07">
       <description>
         <ul>
           <li>Window close button now minimizes to system tray instead of quitting.</li>

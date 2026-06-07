@@ -609,7 +609,7 @@ void MainWindow::onTrayActivated(QSystemTrayIcon::ActivationReason reason) {
 
 void MainWindow::showAbout() {
     QMessageBox::about(this, "About LGL Power Profile Manager",
-        "<b>LGL Power Profile Manager</b> v1.1.0<br><br>"
+        "<b>LGL Power Profile Manager</b> v1.1.1<br><br>"
         "A Qt6 GUI for managing tuned performance profiles.<br><br>"
         "Built for Fedora and RHEL-based systems.<br>"
         "© LinuxGamerLife");

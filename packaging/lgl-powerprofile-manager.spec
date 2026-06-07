@@ -1,5 +1,5 @@
 Name:           lgl-powerprofile-manager
-Version:        1.1.0
+Version:        1.1.1
 Release:        1%{?dist}
 Summary:        Qt6 GUI for managing tuned power profiles
 
@@ -59,6 +59,9 @@ appstreamcli validate --no-net %{buildroot}%{_datadir}/metainfo/%{name}.metainfo
 
 
 %changelog
+* Sat Jun 07 2026 linuxgamerlife <linuxgamerlife@users.noreply.github.com> - 1.1.1-1
+- Version bump to force COPR rebuild
+
 * Sat Jun 07 2026 linuxgamerlife <linuxgamerlife@users.noreply.github.com> - 1.1.0-1
 - Minimize to tray on window close instead of quitting
 - Show one-time tray notification on first minimize

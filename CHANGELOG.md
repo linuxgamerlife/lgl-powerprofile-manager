@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1] - 2026-06-07
+
+### Build
+- Version bump to force COPR rebuild
+
+---
+
 ## [1.1.0] - 2026-06-07
 
 ### Fixed
