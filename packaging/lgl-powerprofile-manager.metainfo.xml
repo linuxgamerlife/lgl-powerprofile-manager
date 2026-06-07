@@ -3,6 +3,7 @@
   <id>io.github.linuxgamerlife.lgl-powerprofile-manager</id>
   <name>LGL Power Profile Manager</name>
   <summary>Qt6 GUI for managing tuned power profiles</summary>
+  <icon type="stock">lgl-powerprofile-manager</icon>
   <launchable type="desktop-id">lgl-powerprofile-manager.desktop</launchable>
   <description>
     <p>LGL Power Profile Manager is a desktop application for switching between
@@ -19,13 +20,18 @@
   <developer id="io.github.linuxgamerlife">
     <name>linuxgamerlife</name>
   </developer>
+  <categories>
+    <category>Settings</category>
+    <category>HardwareSettings</category>
+  </categories>
   <url type="homepage">https://github.com/linuxgamerlife/lgl-powerprofile-manager</url>
   <releases>
     <release version="1.1.1" date="2026-06-07">
       <description>
         <ul>
           <li>Window close button now minimizes to system tray instead of quitting.</li>
-          <li>System tray icon now shows the application icon.</li>
+          <li>Right-click the tray icon to quit; left-click toggles the window.</li>
+          <li>System tray now shows the application icon.</li>
           <li>Updated application icon.</li>
         </ul>
       </description>
