@@ -1,5 +1,11 @@
 # tuned-adm Profiles Explained
 
+This guide accompanies LGL Power Profile Manager 2.0.0.
+
+This guide explains the tuned profiles shipped by Fedora and RHEL-based
+systems. The application's **Reference** page presents the same guidance in a
+card layout, with best-for and avoid-when notes.
+
 ## Is this Fedora only?
 
 `tuned-adm` is not exclusive to Fedora, but it is most commonly used and best integrated there.
@@ -29,17 +35,17 @@ So:
 | optimize-serial-console | Improves responsiveness for serial console access | Headless servers managed via serial | Any normal desktop or GUI system |
 | powersave | Minimises power usage aggressively | Laptops, low-power systems, always-on devices | Gaming, performance tasks |
 | throughput-performance | High performance without going full low-latency | Servers, mixed workloads, heavy multitasking | Battery-powered devices or thermally limited systems |
-| virtual-guest | Optimised for running inside a VM | If running inside VirtualBox, KVM, VMware, etc. | Bare metal installs |
-| virtual-host | Optimised for hosting VMs | If running virtual machines on your system | Normal desktop use without VMs |
+| virtual-guest | Optimised for running inside a VM | If running inside QEMU/KVM | Bare metal installs |
+| virtual-host | Optimised for hosting VMs | If running QEMU/KVM virtual machines on your system | Normal desktop use without VMs |
 
 ---
 
 ## Quick Guidance
 
-- Use `balanced` or `desktop` for general use  
-- Use `latency-performance` when you want maximum responsiveness  
-- Use `powersave` for battery-focused setups  
-- Only use specialised profiles (network, HPC, virtual) if your workload actually requires them  
+- Use `balanced` or `desktop` for general use
+- Use `latency-performance` when you want maximum responsiveness
+- Use `powersave` for battery-focused setups
+- Only use specialised profiles (network, HPC, virtual) if your workload actually requires them
 
 ---
 
@@ -48,9 +54,9 @@ So:
 `tuned-adm` does not add performance by magic.
 
 It adjusts things like:
-- CPU governor behaviour  
-- Power states  
-- Disk and network tuning  
-- Kernel parameters  
+- CPU governor behaviour
+- Power states
+- Disk and network tuning
+- Kernel parameters
 
 The right profile depends entirely on your workload.

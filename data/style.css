@@ -1,0 +1,204 @@
+/* LGL Power Profile Manager (GTK): follows the desktop theme.
+
+   Colours come from libadwaita's named colours, which libadwaita resolves from
+   the desktop and which the user's ~/.config/gtk-4.0/gtk.css overrides.
+   ThemeWatcher re-reads that file when it changes, so the app re-themes live.
+   Only the status colours are fixed, with light and dark variants switched by
+   the .dark class on the main window. Loaded at APPLICATION priority, so the
+   user's gtk.css still wins. */
+
+@define-color pp_bg @window_bg_color;
+@define-color pp_fg @window_fg_color;
+@define-color pp_accent @accent_bg_color;
+@define-color pp_on_accent @accent_fg_color;
+@define-color pp_surface color-mix(in srgb, @pp_fg 4%, @pp_bg);
+@define-color pp_sunken color-mix(in srgb, @pp_fg 2%, @pp_bg);
+@define-color pp_border color-mix(in srgb, @pp_fg 16%, @pp_bg);
+@define-color pp_hover color-mix(in srgb, @pp_fg 8%, @pp_bg);
+@define-color pp_muted color-mix(in srgb, @pp_fg 68%, @pp_bg);
+@define-color pp_subtle color-mix(in srgb, @pp_fg 42%, @pp_bg);
+
+@define-color pp_positive #067647;
+@define-color pp_neutral #a15c07;
+@define-color pp_negative #b42318;
+@define-color pp_positive_dark #47cd89;
+@define-color pp_neutral_dark #fdb022;
+@define-color pp_negative_dark #f97066;
+
+/* --- type ------------------------------------------------------------------- */
+
+/* The ThemeWatcher replaces this font stack with the desktop monospace font.
+   Every class listed here must also be listed in core/theme.cpp. */
+.mono, .wordmark, .section-label, .pp-chip, .profile-name, .reference-label, .code-block {
+  font-family: "Adwaita Mono", "JetBrains Mono", monospace;
+}
+.mono { font-feature-settings: "tnum"; }
+.muted { color: @pp_muted; }
+.subtle { color: @pp_subtle; }
+.small { font-size: 0.85em; }
+
+.section-label {
+  font-size: 0.78em;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: @pp_muted;
+}
+
+/* --- brand ------------------------------------------------------------------ */
+
+.wordmark {
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+/* --- layout ----------------------------------------------------------------- */
+
+/* Square window corners: compositors that draw their own rounded borders clip
+   the window to them, and a second radius here leaves a gap. */
+:root { --window-radius: 0px; }
+
+.body { padding: 12px; }
+
+.pp-card {
+  background-color: @pp_surface;
+  border: 1px solid @pp_border;
+  border-radius: 10px;
+  padding: 14px;
+}
+.pp-card.flush { padding: 0; }
+.pp-card.flush > .card-head { padding: 12px 14px 8px 14px; }
+
+.profiles-scroller > viewport { background: none; }
+
+/* --- buttons ---------------------------------------------------------------- */
+
+button.pp-primary {
+  background-image: none;
+  background-color: @pp_accent;
+  color: @pp_on_accent;
+  border-color: @pp_accent;
+  font-weight: 600;
+}
+button.pp-primary:hover { background-color: color-mix(in srgb, @pp_accent 85%, @pp_fg); }
+button.pp-primary:disabled { opacity: 0.45; }
+
+button.pp-small {
+  min-height: 0;
+  padding: 2px 10px;
+  font-size: 0.85em;
+}
+
+/* --- profiles --------------------------------------------------------------- */
+
+.profile-row {
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+.profile-row:hover { background-color: @pp_hover; }
+.profile-row:checked {
+  background-color: color-mix(in srgb, @pp_accent 22%, transparent);
+}
+.profile-name {
+  color: @pp_accent;
+  font-weight: 600;
+}
+
+.profile-label {
+  color: @pp_muted;
+  border: 1px solid @pp_border;
+  border-radius: 6px;
+  padding: 1px 8px;
+  font-size: 0.8em;
+}
+
+/* --- reference -------------------------------------------------------------- */
+
+.reference-item {
+  background-color: @pp_sunken;
+  border: 1px solid @pp_border;
+  border-radius: 8px;
+  padding: 12px;
+}
+.reference-item:hover { background-color: @pp_hover; }
+.reference-label {
+  color: @pp_muted;
+  font-size: 0.72em;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.code-block {
+  color: @pp_fg;
+  background-color: @pp_sunken;
+  border-left: 3px solid @pp_accent;
+  border-radius: 4px;
+  padding: 5px 8px;
+}
+
+/* --- status: chips and notices ---------------------------------------------- */
+
+.pp-chip {
+  font-size: 0.78em;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 1px 8px;
+  border-radius: 6px;
+  border: 1px solid currentColor;
+}
+.pp-chip.positive { color: @pp_positive; background-color: alpha(@pp_positive, 0.12); }
+.pp-chip.neutral { color: @pp_neutral; background-color: alpha(@pp_neutral, 0.12); }
+.pp-chip.negative { color: @pp_negative; background-color: alpha(@pp_negative, 0.12); }
+window.dark .pp-chip.positive { color: @pp_positive_dark; background-color: alpha(@pp_positive_dark, 0.12); }
+window.dark .pp-chip.neutral { color: @pp_neutral_dark; background-color: alpha(@pp_neutral_dark, 0.12); }
+window.dark .pp-chip.negative { color: @pp_negative_dark; background-color: alpha(@pp_negative_dark, 0.12); }
+
+.pp-notice {
+  margin: 0 0 16px 0;
+  padding: 9px 16px;
+  border-radius: 8px;
+  border: 1px solid @pp_border;
+  background-color: @pp_surface;
+  color: @pp_fg;
+  box-shadow: 0 2px 10px alpha(black, 0.18);
+}
+.pp-notice.positive {
+  color: @pp_positive;
+  border-color: color-mix(in srgb, @pp_positive 45%, @pp_bg);
+  background-color: color-mix(in srgb, @pp_positive 8%, @pp_bg);
+}
+.pp-notice.neutral {
+  color: @pp_neutral;
+  border-color: color-mix(in srgb, @pp_neutral 45%, @pp_bg);
+  background-color: color-mix(in srgb, @pp_neutral 8%, @pp_bg);
+}
+.pp-notice.negative {
+  color: @pp_negative;
+  border-color: color-mix(in srgb, @pp_negative 45%, @pp_bg);
+  background-color: color-mix(in srgb, @pp_negative 8%, @pp_bg);
+}
+window.dark .pp-notice.positive {
+  color: @pp_positive_dark;
+  border-color: color-mix(in srgb, @pp_positive_dark 45%, @pp_bg);
+  background-color: color-mix(in srgb, @pp_positive_dark 8%, @pp_bg);
+}
+window.dark .pp-notice.neutral {
+  color: @pp_neutral_dark;
+  border-color: color-mix(in srgb, @pp_neutral_dark 45%, @pp_bg);
+  background-color: color-mix(in srgb, @pp_neutral_dark 8%, @pp_bg);
+}
+window.dark .pp-notice.negative {
+  color: @pp_negative_dark;
+  border-color: color-mix(in srgb, @pp_negative_dark 45%, @pp_bg);
+  background-color: color-mix(in srgb, @pp_negative_dark 8%, @pp_bg);
+}
+
+/* --- log -------------------------------------------------------------------- */
+
+textview.log-view, textview.log-view > text { background: none; }
+.log-view { padding: 8px 14px; }
+
+textview.help-view, textview.help-view > text { background: none; }
+
+/* --- dialogs ---------------------------------------------------------------- */
+
+.dialog-body { padding: 18px; }

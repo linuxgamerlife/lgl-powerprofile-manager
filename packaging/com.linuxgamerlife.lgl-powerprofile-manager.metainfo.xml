@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+
+  <id>com.linuxgamerlife.lgl-powerprofile-manager</id>
+
+  <name>LGL Power Profile Manager</name>
+  <summary>Manage tuned power profiles on Fedora and RHEL-based systems</summary>
+
+  <metadata_license>MIT</metadata_license>
+  <project_license>MIT</project_license>
+
+  <description>
+    <p>
+      LGL Power Profile Manager is a graphical interface for switching between
+      tuned performance profiles without using the terminal.
+    </p>
+    <p>
+      It shows the active profile, lists every available profile with a
+      human-friendly label and description, applies profiles through Polkit,
+      and keeps a bounded command log. A reference page explains what each
+      built-in profile is best for and when to avoid it.
+    </p>
+    <p>
+      If tuned is not installed, the application opens in setup mode with
+      installation guidance instead of failing.
+    </p>
+  </description>
+
+  <launchable type="desktop-id">com.linuxgamerlife.lgl-powerprofile-manager.desktop</launchable>
+
+  <provides>
+    <id>lgl-powerprofile-manager.desktop</id>
+    <id>io.github.linuxgamerlife.lgl-powerprofile-manager</id>
+  </provides>
+
+  <url type="homepage">https://github.com/linuxgamerlife/lgl-powerprofile-manager</url>
+  <url type="bugtracker">https://github.com/linuxgamerlife/lgl-powerprofile-manager/issues</url>
+
+  <developer id="com.linuxgamerlife">
+    <name>LinuxGamerLife</name>
+  </developer>
+
+  <categories>
+    <category>Settings</category>
+    <category>HardwareSettings</category>
+  </categories>
+
+  <keywords>
+    <keyword>tuned</keyword>
+    <keyword>power</keyword>
+    <keyword>profile</keyword>
+    <keyword>performance</keyword>
+    <keyword>cpu</keyword>
+    <keyword>battery</keyword>
+    <keyword>gaming</keyword>
+  </keywords>
+
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+  </supports>
+
+  <requires>
+    <display_length compare="ge">640</display_length>
+  </requires>
+
+  <releases>
+    <release version="2.0.0" date="2026-10-25">
+      <description>
+        <p>The maintained application has moved from Qt 6 to GTK 4.</p>
+        <ul>
+          <li>New GTK interface that follows the desktop theme, dark mode, accent colour, and user CSS</li>
+          <li>Application and system title-bar modes, with Ctrl+Shift+M</li>
+          <li>Keyboard-accessible main menu, standard shortcuts, and a system tray menu</li>
+          <li>Bundled Help window (F1) with a user guide for profiles, shortcuts, and the tray</li>
+          <li>Card-based profile list and reference pages with tested core parsing and settings logic</li>
+          <li>The application ID is now com.linuxgamerlife.lgl-powerprofile-manager; re-pin the application if it was pinned before</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.1.2" date="2026-06-07">
+      <description>
+        <ul>
+          <li>Prevent multiple instances of the application from launching simultaneously.</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.1.1" date="2026-06-07">
+      <description>
+        <ul>
+          <li>Window close button now minimizes to the system tray instead of quitting.</li>
+          <li>Right-click the tray icon to quit; left-click toggles the window.</li>
+          <li>System tray now shows the application icon.</li>
+          <li>Updated application icon.</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.0.0" date="2026-04-05">
+      <description>
+        <ul>
+          <li>Initial release.</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+
+  <content_rating type="oars-1.1"/>
+
+</component>

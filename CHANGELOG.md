@@ -1,5 +1,35 @@
 # Changelog
 
+## [2.0.0] - 2026-10-25
+
+### Changed
+- Migrated the maintained application from Qt 6 to GTK 4 (gtkmm)
+- Application and AppStream ID changed to `com.linuxgamerlife.lgl-powerprofile-manager`; re-pin the application if it was pinned before
+- Rebuilt the Status, Profiles, Log, and Reference pages with the shared LGL card layout
+- Added a Setup page shown when `tuned-adm` is not installed
+- Closing the window now hides it in the system tray only when a compatible tray host is available; otherwise it quits
+
+### Added
+- Application and system title-bar modes, with Ctrl+Shift+M
+- Keyboard-accessible main menu with F10 and Alt, and the standard shortcuts
+- Bundled `HELP.md` with an in-app Help window (F1) and a Help menu entry
+- Refreshed README, HELP.md, and project documentation for the 2.0.0 release
+- Asynchronous tuned commands with timeouts and bounded output
+- Live theme following, dark mode, accent colour, desktop monospace font, and user CSS reload
+- Settings in `~/.config/lgl-powerprofile-manager/settings.ini`
+- Snapshot smoke test support
+- GLib unit tests for profile data, tuned parsing, settings, theme helpers, and validation
+- Root Makefile, COPR Makefile, and Fedora CI workflow
+- Card-based profile reference with best-for and avoid-when guidance
+
+### Build
+- The root CMake configuration builds the GTK application from `src/`, `data/`, and `tests/`
+- Packaging installs the binary, desktop entry, AppStream metadata, and hicolor icons
+- Qt is no longer a build, test, runtime, or packaging dependency
+- The old Qt implementation is archived under `legacy/qt/` as read-only historical reference
+
+---
+
 ## [1.1.2] - 2026-06-07
 
 ### Fixed

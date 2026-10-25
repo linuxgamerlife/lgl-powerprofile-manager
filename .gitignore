@@ -1,4 +1,6 @@
 build/
+build-*/
+result/
 .claude/settings.local.json
 
 # Local-only notes and tooling config
