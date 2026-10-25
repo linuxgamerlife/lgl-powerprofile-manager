@@ -1,0 +1,8 @@
+build/
+.claude/settings.local.json
+
+# Local-only notes and tooling config
+MEMORY.md
+PROJECT_STATUS.md
+.clang-format
+.clang-tidy
